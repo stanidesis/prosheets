@@ -9,6 +9,7 @@ ProSheets is a free Google Sheets template that enables a variety of project man
 - Project, Milestone, and Task Tracking
 - Two-way Google Calendar synchronization
   - View, edit, and complete your tasks from GCal (no plugin or browser extension required)
+- Task Roll-over: Incomplete tasks extend to the next day
 - (new in V1.1) Track the time you spend on each task with simple start/stop functionality (optional prorate setting included!)
 
 ## What's In This Repo
