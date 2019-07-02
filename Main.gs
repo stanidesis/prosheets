@@ -264,6 +264,7 @@ function syncEvents(fullSync) {
           task.addMinutesToTimeSpent(prorateChoice * Math.ceil(rawMinutesBetween/prorateChoice))
         }
         task.setStartTime()
+        task.commitToRow()
         createOrUpdateTaskEvent(task)
       } else {
         var shouldUpdateEvent = false
