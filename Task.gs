@@ -68,8 +68,6 @@ function Task (rowRange) {
   this.addMinutesToTimeSpent = function(minutes) {
     if (this.timeSpent === '' || typeof this.timeSpent === typeof undefined) {
       this.timeSpent = new Date(Date.parse(CONSTS.TASK.TIME_SPENT_STARTING_POINT))
-      this.timeSpent.setTime(minutes * 60000)
-      return
     }
     this.timeSpent = new Date(this.timeSpent.getTime() + minutes * 60000)
   }
@@ -173,6 +171,7 @@ Task.prototype.hydrateFromCalendarEvent = function(event) {
   } else {
     this.estimate = daysBetweenDates(this.startDate, parseDate(event.end.dateTime)) + 1
   }
+  this.addMinutesToTimeSpent(0)
   this.setId(event.id)
 }
 
