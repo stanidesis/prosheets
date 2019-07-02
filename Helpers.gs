@@ -62,7 +62,7 @@ function daysBetweenDates(date1, date2) {
  * @return {number} The number of minutes between date1 and date2.
  */
 function minutesBetweenDates(date1, date2) {
-  return Math.round(((Math.abs(date2 - date1) % 86400000) % 3600000) / 60000)
+  return Math.floor((Math.abs(date2 - date1)/1000)/60)
 }
 
 function getRowFromCell(cell) {
