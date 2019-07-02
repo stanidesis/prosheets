@@ -10,8 +10,8 @@ function upgradeIfNecessary() {
   if (!upgradeAvailable) {
     return
   }
-  
-  var response = SpreadsheetApp.getUi().alert(CONSTS.UPGRADES.PROMPT, ui.ButtonSet.OK)
+  var ui = SpreadsheetApp.getUi()
+  var response = ui.alert(CONSTS.UPGRADES.PROMPT, ui.ButtonSet.OK)
   if (response !== ui.Button.OK) {
     SpreadsheetApp.getUi().alert(CONSTS.UPGRADES.PROMPT_REJECTED)
     return
@@ -205,3 +205,4 @@ function getAvailableCalendars() {
   } while (pageToken);
   return calendarList;
 }
+  
