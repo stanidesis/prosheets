@@ -317,7 +317,7 @@ function syncEvents(fullSync) {
 
 function addTimeAndStopTracking(task) {
   var rawMinutesBetween = minutesBetweenDates(task.getStartTime(), new Date())
-  var proratePref = PropertiesService.getUserProperties().getProperty(CONSTS.PROPERTIES.PRORATE)
+  var proratePref = PropertiesService.getUserProperties().getProperty(CONSTS.PROPERTIES.PRORATE) || CONSTS.TASK.PRORATES[0]
   if (proratePref === CONSTS.TASK.PRORATES[0]) { // 'None' no prorate
     task.addMinutesToTimeSpent(rawMinutesBetween)
   } else {
