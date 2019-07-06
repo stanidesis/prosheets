@@ -244,6 +244,9 @@ function syncEvents(fullSync) {
       }
       // All other updates
       if (event.summary.indexOf(CONSTS.ACTIONS.CLOSE) > -1) {
+        if (task.hasStartTime()) {
+          addTimeAndStopTracking(task)
+        }
         task.markAsCompleted()
         createOrUpdateTaskEvent(task)
       } else if (event.summary.indexOf(CONSTS.ACTIONS.OPEN) > -1) {
@@ -254,16 +257,9 @@ function syncEvents(fullSync) {
         task.setStartTime(new Date())
         createOrUpdateTaskEvent(task)
       } else if (event.summary.indexOf(CONSTS.ACTIONS.STOP) > -1) {
-        var rawMinutesBetween = minutesBetweenDates(task.getStartTime(), new Date())
-        var proratePref = PropertiesService.getUserProperties().getProperty(CONSTS.PROPERTIES.PRORATE)
-        if (proratePref === CONSTS.TASK.PRORATES[0]) { // 'None' no prorate
-          task.addMinutesToTimeSpent(rawMinutesBetween)
-        } else {
-          // This rounds up to the prorate
-          var prorateChoice = parseInt(proratePref)
-          task.addMinutesToTimeSpent(prorateChoice * Math.ceil(rawMinutesBetween/prorateChoice))
+        if (task.hasStartTime()) {
+          addTimeAndStopTracking(task)
         }
-        task.setStartTime()
         task.commitToRow()
         createOrUpdateTaskEvent(task)
       } else {
@@ -317,6 +313,19 @@ function syncEvents(fullSync) {
   } while (pageToken)
   properties.setProperty(CONSTS.PROPERTIES.SYNC_TOKEN, events.nextSyncToken)
   lock.releaseLock()
+}
+
+function addTimeAndStopTracking(task) {
+  var rawMinutesBetween = minutesBetweenDates(task.getStartTime(), new Date())
+  var proratePref = PropertiesService.getUserProperties().getProperty(CONSTS.PROPERTIES.PRORATE)
+  if (proratePref === CONSTS.TASK.PRORATES[0]) { // 'None' no prorate
+    task.addMinutesToTimeSpent(rawMinutesBetween)
+  } else {
+    // This rounds up to the prorate
+    var prorateChoice = parseInt(proratePref)
+    task.addMinutesToTimeSpent(prorateChoice * Math.ceil(rawMinutesBetween/prorateChoice))
+  }
+  task.setStartTime()
 }
 
 function itsABrandNewDay() {
