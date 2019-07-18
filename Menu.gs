@@ -1,6 +1,6 @@
 function onOpen() {
   createMenu()
-  upgradeIfNecessary()
+  // upgradeIfNecessary()
 }
 
 function upgradeIfNecessary() {
